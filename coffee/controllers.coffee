@@ -166,6 +166,11 @@ $localStorage, getStaticJson) ->
       @myTimePercent = @myTimeSum / ( 24 - @sleepSum)
 
   
+  $scope.toPercent = (num) ->
+    output = (num * 100).toFixed(1)
+    output = output + "%"
+    output
+
   $scope.tableItems = []
   $scope.addItem = ->
     add = (project, index, status, more) ->
@@ -179,14 +184,10 @@ $localStorage, getStaticJson) ->
         status: status
         highlight: isHighlight
       }
-    toPercent = (num) ->
-      output = (num * 100).toFixed(1)
-      output = output + "%"
-      output
     add 'My Time', $scope.multipleSum.myTimeGoal,
       $scope.multipleSum.myTimeSum.toFixed(1), false
-    add 'My Percent', toPercent($scope.multipleSum.myTimePercentGoal),
-      toPercent($scope.multipleSum.myTimePercent), false
+    add 'My Percent', $scope.toPercent($scope.multipleSum.myTimePercentGoal),
+      $scope.toPercent($scope.multipleSum.myTimePercent), false
     add 'Core Sleep', $scope.sumLimit.coresleepGoal/60,
       ($scope.sumLimit.coresleep/60).toFixed(1), true
     add 'Nap', $scope.sumLimit.napGoal, $scope.sumLimit.nap, true
@@ -197,8 +198,8 @@ $localStorage, getStaticJson) ->
     add 'Break times', $scope.breakTime.countGoal, $scope.breakTime.count, false
     add 'Average break', $scope.breakTime.averageGoal, $scope.breakTime.average,
       true
-    add 'BreakTime / Pomodoro', toPercent($scope.multipleSum.breakPomodoroGoal),
-      toPercent($scope.multipleSum.breakPomodoro), false
+    add 'BreakTime / Pomodoro', $scope.toPercent($scope.multipleSum.breakPomodoroGoal),
+      $scope.toPercent($scope.multipleSum.breakPomodoro), false
     add 'Passional Work', $scope.multipleSum.passionalWorksGoal,
       $scope.multipleSum.passionalSum.toFixed(1), false
     add 'Work Sum', $scope.multipleSum.workSumGoal,
@@ -209,6 +210,53 @@ $localStorage, getStaticJson) ->
     add 'GoodMorning', $scope.sumLimit.goodmorningGoal,
       $scope.sumLimit.goodmorning, true
 
+# $scope.statusOutput = "
+#   My Time	
+#   #{$scope.multipleSum.myTimeGoal}	
+#   #{$scope.multipleSum.myTimeSum.toFixed(1)}	
+#   My Percent	
+#   #{$scope.toPercent($scope.multipleSum.myTimePercentGoal)}	
+#   #{$scope.toPercent($scope.multipleSum.myTimePercent)}	
+#   Core Sleep	
+#   #{$scope.sumLimit.coresleepGoal/60}	
+#   #{($scope.sumLimit.coresleep/60).toFixed(1)}	
+#   Nap	
+#   #{$scope.sumLimit.napGoal}	
+#   #{$scope.sumLimit.nap}	
+#   Pomodoro Times	
+#   #{$scope.multipleSum.pomodoroTimesGoal}	
+#   #{$scope.multipleSum.pomodoroTimes}	
+#   Pomodoro Average	
+#   #{$scope.multipleSum.pomodoroAveGoal}	
+#   #{$scope.multipleSum.pomodoroAve.toFixed(1)}	
+#   Break times	
+#   #{$scope.breakTime.countGoal}	
+#   #{$scope.breakTime.count}	
+#   Average break	
+#   #{$scope.breakTime.averageGoal}	
+#   #{$scope.breakTime.average}	
+#   BreakTime / Pomodoro	
+#   #{$scope.toPercent($scope.multipleSum.breakPomodoroGoal)}	
+#   #{$scope.toPercent($scope.multipleSum.breakPomodoro)}	
+#   Passional Work	
+#   #{$scope.multipleSum.passionalWorksGoal}	
+#   #{$scope.multipleSum.passionalSum.toFixed(1)}	
+#   Work Sum	
+#   #{$scope.multipleSum.workSumGoal}	
+#   #{$scope.multipleSum.workSum.toFixed(1)}	
+#   Lunch	
+#   #{$scope.sumLimit.lunchGoal}	
+#   #{$scope.sumLimit.lunch}	
+#   Dinner	
+#   #{$scope.sumLimit.dinnerGoal}	
+#   #{$scope.sumLimit.dinner}	
+#   Cooking	
+#   #{$scope.sumLimit.cookingGoal}	
+#   #{$scope.sumLimit.cooking}	
+#   GoodMorning	
+#   #{$scope.sumLimit.goodmorningGoal}	
+#   #{$scope.sumLimit.goodmorning}	
+# "
 
   $scope.analyse = ->
     console.log $localStorage.formatData

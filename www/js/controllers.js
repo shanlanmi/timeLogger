@@ -181,9 +181,15 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
       return this.myTimePercent = this.myTimeSum / (24 - this.sleepSum);
     }
   };
+  $scope.toPercent = function(num) {
+    var output;
+    output = (num * 100).toFixed(1);
+    output = output + "%";
+    return output;
+  };
   $scope.tableItems = [];
   $scope.addItem = function() {
-    var add, toPercent;
+    var add;
     add = function(project, index, status, more) {
       var isHighlight;
       if (more) {
@@ -198,21 +204,15 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
         highlight: isHighlight
       });
     };
-    toPercent = function(num) {
-      var output;
-      output = (num * 100).toFixed(1);
-      output = output + "%";
-      return output;
-    };
     add('My Time', $scope.multipleSum.myTimeGoal, $scope.multipleSum.myTimeSum.toFixed(1), false);
-    add('My Percent', toPercent($scope.multipleSum.myTimePercentGoal), toPercent($scope.multipleSum.myTimePercent), false);
+    add('My Percent', $scope.toPercent($scope.multipleSum.myTimePercentGoal), $scope.toPercent($scope.multipleSum.myTimePercent), false);
     add('Core Sleep', $scope.sumLimit.coresleepGoal / 60, ($scope.sumLimit.coresleep / 60).toFixed(1), true);
     add('Nap', $scope.sumLimit.napGoal, $scope.sumLimit.nap, true);
     add('Pomodoro Times', $scope.multipleSum.pomodoroTimesGoal, $scope.multipleSum.pomodoroTimes, false);
     add('Pomodoro Average', $scope.multipleSum.pomodoroAveGoal, $scope.multipleSum.pomodoroAve.toFixed(1), true);
     add('Break times', $scope.breakTime.countGoal, $scope.breakTime.count, false);
     add('Average break', $scope.breakTime.averageGoal, $scope.breakTime.average, true);
-    add('BreakTime / Pomodoro', toPercent($scope.multipleSum.breakPomodoroGoal), toPercent($scope.multipleSum.breakPomodoro), false);
+    add('BreakTime / Pomodoro', $scope.toPercent($scope.multipleSum.breakPomodoroGoal), $scope.toPercent($scope.multipleSum.breakPomodoro), false);
     add('Passional Work', $scope.multipleSum.passionalWorksGoal, $scope.multipleSum.passionalSum.toFixed(1), false);
     add('Work Sum', $scope.multipleSum.workSumGoal, $scope.multipleSum.workSum.toFixed(1), true);
     add('Lunch', $scope.sumLimit.lunchGoal, $scope.sumLimit.lunch, true);
