@@ -50,12 +50,22 @@ $localStorage, getStaticJson) ->
         from: strToDate arr[1]
         to: strToDate arr[2]
         comment: arr[3].replace '"',''}
-      obj.during = (obj.to - obj.from) / 1000 / 60
       $scope.formatData.log.push obj
       $scope.formatData.date = $scope.input.yesterday
     itemObj i for i in tempData when i.match(/^"\w+/)
     $scope.formatData.log.sort (a, b) ->
       a.from - b.from
+    # ==========> set 24:00 <==========
+    firstCore = false
+    for item in $scope.formatData.log
+      if item.type is "CoreSleep" and !firstCore
+        firstCore = true
+        item.from.setHours 24
+        item.from.setMinutes 0
+      else if item.type is "CoreSleep" and firstCore
+        item.to.setHours 0
+        item.to.setMinutes 0
+      item.during = (item.to - item.from) / 1000 / 60
     $localStorage.formatData = $scope.formatData
     console.log $localStorage.formatData
     $scope.displayData = JSON.stringify $scope.formatData
@@ -68,7 +78,7 @@ $localStorage, getStaticJson) ->
 
   $scope.breakTime =
     averageGoal: 5
-    countGoal: 20
+    countGoal: 15
     analyse: ->
       count = 0
       sum = 0
@@ -210,7 +220,8 @@ $localStorage, getStaticJson) ->
     add 'Break times', $scope.breakTime.countGoal, $scope.breakTime.count, false
     add 'Average break', $scope.breakTime.averageGoal, $scope.breakTime.average,
       true
-    add 'BreakTime / Pomodoro', $scope.toPercent($scope.multipleSum.breakPomodoroGoal),
+    add 'BreakTime / Pomodoro',
+      $scope.toPercent $scope.multipleSum.breakPomodoroGoal,
       $scope.toPercent($scope.multipleSum.breakPomodoro), false
     add 'Passional Work', $scope.multipleSum.passionalWorksGoal,
       $scope.multipleSum.passionalSum.toFixed(1), false
@@ -223,51 +234,51 @@ $localStorage, getStaticJson) ->
       $scope.sumLimit.goodmorning, true
 
 # $scope.statusOutput = "
-#   My Time	
-#   #{$scope.multipleSum.myTimeGoal}	
-#   #{$scope.multipleSum.myTimeSum.toFixed(1)}	
-#   My Percent	
-#   #{$scope.toPercent($scope.multipleSum.myTimePercentGoal)}	
-#   #{$scope.toPercent($scope.multipleSum.myTimePercent)}	
-#   Core Sleep	
-#   #{$scope.sumLimit.coresleepGoal/60}	
-#   #{($scope.sumLimit.coresleep/60).toFixed(1)}	
-#   Nap	
-#   #{$scope.sumLimit.napGoal}	
-#   #{$scope.sumLimit.nap}	
-#   Pomodoro Times	
-#   #{$scope.multipleSum.pomodoroTimesGoal}	
-#   #{$scope.multipleSum.pomodoroTimes}	
-#   Pomodoro Average	
-#   #{$scope.multipleSum.pomodoroAveGoal}	
-#   #{$scope.multipleSum.pomodoroAve.toFixed(1)}	
-#   Break times	
-#   #{$scope.breakTime.countGoal}	
-#   #{$scope.breakTime.count}	
-#   Average break	
-#   #{$scope.breakTime.averageGoal}	
-#   #{$scope.breakTime.average}	
-#   BreakTime / Pomodoro	
-#   #{$scope.toPercent($scope.multipleSum.breakPomodoroGoal)}	
-#   #{$scope.toPercent($scope.multipleSum.breakPomodoro)}	
-#   Passional Work	
-#   #{$scope.multipleSum.passionalWorksGoal}	
-#   #{$scope.multipleSum.passionalSum.toFixed(1)}	
-#   Work Sum	
-#   #{$scope.multipleSum.workSumGoal}	
-#   #{$scope.multipleSum.workSum.toFixed(1)}	
-#   Lunch	
-#   #{$scope.sumLimit.lunchGoal}	
-#   #{$scope.sumLimit.lunch}	
-#   Dinner	
-#   #{$scope.sumLimit.dinnerGoal}	
-#   #{$scope.sumLimit.dinner}	
-#   Cooking	
-#   #{$scope.sumLimit.cookingGoal}	
-#   #{$scope.sumLimit.cooking}	
-#   GoodMorning	
-#   #{$scope.sumLimit.goodmorningGoal}	
-#   #{$scope.sumLimit.goodmorning}	
+#   My Time
+#   #{$scope.multipleSum.myTimeGoal}
+#   #{$scope.multipleSum.myTimeSum.toFixed(1)}
+#   My Percent
+#   #{$scope.toPercent($scope.multipleSum.myTimePercentGoal)}
+#   #{$scope.toPercent($scope.multipleSum.myTimePercent)}
+#   Core Sleep
+#   #{$scope.sumLimit.coresleepGoal/60}
+#   #{($scope.sumLimit.coresleep/60).toFixed(1)}
+#   Nap
+#   #{$scope.sumLimit.napGoal}
+#   #{$scope.sumLimit.nap}
+#   Pomodoro Times
+#   #{$scope.multipleSum.pomodoroTimesGoal}
+#   #{$scope.multipleSum.pomodoroTimes}
+#   Pomodoro Average
+#   #{$scope.multipleSum.pomodoroAveGoal}
+#   #{$scope.multipleSum.pomodoroAve.toFixed(1)}
+#   Break times
+#   #{$scope.breakTime.countGoal}
+#   #{$scope.breakTime.count}
+#   Average break
+#   #{$scope.breakTime.averageGoal}
+#   #{$scope.breakTime.average}
+#   BreakTime / Pomodoro
+#   #{$scope.toPercent($scope.multipleSum.breakPomodoroGoal)}
+#   #{$scope.toPercent($scope.multipleSum.breakPomodoro)}
+#   Passional Work
+#   #{$scope.multipleSum.passionalWorksGoal}
+#   #{$scope.multipleSum.passionalSum.toFixed(1)}
+#   Work Sum
+#   #{$scope.multipleSum.workSumGoal}
+#   #{$scope.multipleSum.workSum.toFixed(1)}
+#   Lunch
+#   #{$scope.sumLimit.lunchGoal}
+#   #{$scope.sumLimit.lunch}
+#   Dinner
+#   #{$scope.sumLimit.dinnerGoal}
+#   #{$scope.sumLimit.dinner}
+#   Cooking
+#   #{$scope.sumLimit.cookingGoal}
+#   #{$scope.sumLimit.cooking}
+#   GoodMorning
+#   #{$scope.sumLimit.goodmorningGoal}
+#   #{$scope.sumLimit.goodmorning}
 # "
 
   $scope.analyse = ->

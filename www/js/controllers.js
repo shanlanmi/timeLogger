@@ -39,7 +39,7 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     }
   });
   $scope.conversion = function() {
-    var i, itemObj, j, len, tempData;
+    var firstCore, i, item, itemObj, j, k, len, len1, ref, tempData;
     tempData = $scope.input.newData.split('\n');
     $scope.formatData = {
       "date": null,
@@ -54,7 +54,6 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
         to: strToDate(arr[2]),
         comment: arr[3].replace('"', '')
       };
-      obj.during = (obj.to - obj.from) / 1000 / 60;
       $scope.formatData.log.push(obj);
       return $scope.formatData.date = $scope.input.yesterday;
     };
@@ -67,6 +66,20 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     $scope.formatData.log.sort(function(a, b) {
       return a.from - b.from;
     });
+    firstCore = false;
+    ref = $scope.formatData.log;
+    for (k = 0, len1 = ref.length; k < len1; k++) {
+      item = ref[k];
+      if (item.type === "CoreSleep" && !firstCore) {
+        firstCore = true;
+        item.from.setHours(24);
+        item.from.setMinutes(0);
+      } else if (item.type === "CoreSleep" && firstCore) {
+        item.to.setHours(0);
+        item.to.setMinutes(0);
+      }
+      item.during = (item.to - item.from) / 1000 / 60;
+    }
     $localStorage.formatData = $scope.formatData;
     console.log($localStorage.formatData);
     return $scope.displayData = JSON.stringify($scope.formatData);
@@ -75,7 +88,7 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
   $scope.formatData = $localStorage.formatData;
   $scope.breakTime = {
     averageGoal: 5,
-    countGoal: 20,
+    countGoal: 15,
     analyse: function() {
       var count, data, j, len, ref, sum;
       count = 0;

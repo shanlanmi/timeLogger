@@ -4,3 +4,31 @@
 node_modules/
 platforms/
 plugins/
+www/templates
+www/css/*min.css
+www/css/custom
+bower_components
+config/dev.json
+.sass-cache
+www/js
+.projectile
+semantic
+
+### Vim ###
+# swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+[._]*.s[a-w][a-z]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+
+### OSX ###
+*.DS_Store
+.AppleDouble
+.LSOverride
