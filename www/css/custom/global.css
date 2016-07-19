@@ -1,0 +1,29 @@
+.p12 {
+  padding: 12px; }
+
+.fz16 {
+  font-size: 16px; }
+
+.w1 {
+  width: 100%; }
+
+.h200 {
+  height: 200px; }
+
+.status table {
+  color: #333;
+  margin: 50px auto;
+  text-align: center;
+  border-collapse: collapse; }
+  .status table tr:nth-child(odd) {
+    background-color: #eee; }
+  .status table tr th {
+    font-weight: bold;
+    font-size: 1.2em; }
+  .status table tr th, .status table tr td {
+    padding: 6px 20px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee; }
+
+.highlight {
+  background-color: #ffc797; }

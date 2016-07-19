@@ -1,0 +1,12 @@
+{
+  "libs": [
+    "browser",
+    "jquery"
+  ],
+  "plugin": {
+    "angular": {},
+    "node": {},
+    "coffee": {}
+  }
+}
+

@@ -1,0 +1,10 @@
+ion-view(view-title='Home')
+  ion-content.p12(scrollbar-y="false")
+    label.item.item-input
+      textarea.class(ng-model="input.newData")
+    label.item.item-input
+      input.class(type="text", placeholder="Date" ng-model="input.yesterday")
+    textarea.w1.h200(ng-model="displayData")
+    //button.button.icon.icon-right.ion-chevron-right.button-positive.button-block(ng-click="analyse()") Analyse
+    button.button.icon.icon-right.ion-chevron-right.button-positive.button-block(ui-sref='tab.status') Analyse
+      //ng-click="analyse()") Analyse

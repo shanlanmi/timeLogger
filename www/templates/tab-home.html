@@ -1,0 +1,16 @@
+
+<ion-view view-title="Home">
+  <ion-content class="p12" scrollbar-y="false">
+    <label class="item item-input">
+      <textarea class="class" ng-model="input.newData"></textarea>
+    </label>
+    <label class="item item-input">
+      <input class="class" type="text" placeholder="Date" ng-model="input.yesterday"/>
+    </label>
+    <textarea class="w1 h200" ng-model="displayData"></textarea>
+    <!--button.button.icon.icon-right.ion-chevron-right.button-positive.button-block(ng-click="analyse()") Analyse-->
+    <button class="button icon icon-right ion-chevron-right button-positive button-block" ui-sref="tab.status">Analyse
+      <!--ng-click="analyse()") Analyse-->
+    </button>
+  </ion-content>
+</ion-view>

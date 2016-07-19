@@ -1,0 +1,17 @@
+
+<ion-view class="status" view-title="Status">
+  <ion-content>
+    <table>
+      <tr>
+        <th>Project</th>
+        <th>Index</th>
+        <th>Status</th>
+      </tr>
+      <tr ng-repeat="item in tableItems track by $index">
+        <td ng-bind="item.project"></td>
+        <td ng-bind="item.index"></td>
+        <td ng-bind="item.status" ng-class="{'highlight':item.highlight}"></td>
+      </tr>
+    </table>
+  </ion-content>
+</ion-view>

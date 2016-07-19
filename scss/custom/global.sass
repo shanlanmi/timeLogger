@@ -1,0 +1,38 @@
+.p12
+  padding: 12px
+
+.fz16
+  font-size: 16px
+
+.w1
+  width: 100%
+
+.h200
+  height: 200px
+
+
+$light-grey: #eee
+$normal-grey: #999
+$dark-grey: #666
+$orange: #ffc797
+.status
+  table
+    color: #333
+    margin: 50px auto
+    text-align: center
+    border-collapse: collapse
+    //border: 4px solid #eee
+    tr
+      &:nth-child(odd)
+        background-color: $light-grey
+      th
+        font-weight: bold
+        font-size: 1.2em
+        //background-color: $orange
+      th, td
+        padding: 6px 20px
+        border-top: 1px solid $light-grey
+        border-bottom: 1px solid $light-grey
+
+.highlight
+  background-color: $orange
