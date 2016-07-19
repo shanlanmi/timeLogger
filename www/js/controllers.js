@@ -127,7 +127,7 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     }
   };
   $scope.multipleSum = {
-    pomodoro: ['Upgrde', 'Maintain'],
+    pomodoro: ['Upgrde', 'Maintain', 'Daily', 'Weekly', 'RSS', 'DayOne', 'Font-end', 'PathSource', 'Sport', 'healthCare', 'P2P', 'IndexFund', 'Finance'],
     pomodoroTimesGoal: 20,
     pomodoroAveGoal: 30,
     breakPomodoroGoal: 0.5,
@@ -139,7 +139,7 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     sleepGoal: 4.5,
     myTimeGoal: 12,
     myTimePercentGoal: 0.6,
-    myTime: ['Upgrde', 'maintain', 'Daily', 'Weekly', 'RSS', '冥想', 'DayOne', 'Font-end', 'Sport', 'healthCare', 'P2P', 'IndexFund', 'Finance', 'Social', 'Family', 'Cat'],
+    myTime: ['Upgrde', 'maintain', 'Daily', 'Weekly', '冥想', 'DayOne', 'Font-end', 'Sport', 'healthCare', 'P2P', 'IndexFund', 'Finance', 'Social', 'Family', 'Cat'],
     analyse: function() {
       var getArrSum, getSum, result;
       getSum = function(type) {

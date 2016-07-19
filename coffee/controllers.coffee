@@ -105,7 +105,20 @@ $localStorage, getStaticJson) ->
       return
 
   $scope.multipleSum =
-    pomodoro: ['Upgrde','Maintain']
+    pomodoro: [
+      'Upgrde',
+      'Maintain'
+      'Daily',
+      'Weekly',
+      'RSS',
+      'DayOne',
+      'Font-end',
+      'PathSource'
+      'Sport',
+      'healthCare',
+      'P2P',
+      'IndexFund',
+      'Finance']
     pomodoroTimesGoal: 20
     pomodoroAveGoal: 30
     breakPomodoroGoal: 0.5
@@ -122,7 +135,6 @@ $localStorage, getStaticJson) ->
       'maintain',
       'Daily',
       'Weekly',
-      'RSS',
       '冥想',
       'DayOne',
       'Font-end',
