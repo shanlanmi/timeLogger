@@ -150,7 +150,7 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     workSumGoal: 8,
     sleep: ['CoreSleep', 'Nap'],
     sleepGoal: 4.5,
-    myTimeGoal: 12,
+    myTimeGoal: 10,
     myTimePercentGoal: 0.6,
     myTime: ['Upgrde', 'maintain', 'Daily', 'Weekly', '冥想', 'DayOne', 'Font-end', 'Sport', 'healthCare', 'P2P', 'IndexFund', 'Finance', 'Social', 'Family', 'Cat'],
     analyse: function() {
@@ -224,8 +224,8 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     add('Pomodoro Times', $scope.multipleSum.pomodoroTimesGoal, $scope.multipleSum.pomodoroTimes, false);
     add('Pomodoro Average', $scope.multipleSum.pomodoroAveGoal, $scope.multipleSum.pomodoroAve.toFixed(1), true);
     add('Break times', $scope.breakTime.countGoal, $scope.breakTime.count, false);
-    add('Average break', $scope.breakTime.averageGoal, $scope.breakTime.average, true);
-    add('BreakTime / Pomodoro', $scope.toPercent($scope.multipleSum.breakPomodoroGoal), $scope.toPercent($scope.multipleSum.breakPomodoro), false);
+    add('Average break', $scope.breakTime.averageGoal, $scope.breakTime.average.toFixed(1), true);
+    add('BreakTime / Pomodoro', $scope.toPercent($scope.multipleSum.breakPomodoroGoal, $scope.toPercent($scope.multipleSum.breakPomodoro), false));
     add('Passional Work', $scope.multipleSum.passionalWorksGoal, $scope.multipleSum.passionalSum.toFixed(1), false);
     add('Work Sum', $scope.multipleSum.workSumGoal, $scope.multipleSum.workSum.toFixed(1), true);
     add('Lunch', $scope.sumLimit.lunchGoal, $scope.sumLimit.lunch, true);

@@ -138,7 +138,7 @@ $localStorage, getStaticJson) ->
     workSumGoal: 8
     sleep: ['CoreSleep', 'Nap']
     sleepGoal: 4.5
-    myTimeGoal: 12
+    myTimeGoal: 10
     myTimePercentGoal: 0.6
     myTime: [
       'Upgrde',
@@ -218,8 +218,8 @@ $localStorage, getStaticJson) ->
     add 'Pomodoro Average', $scope.multipleSum.pomodoroAveGoal,
       $scope.multipleSum.pomodoroAve.toFixed(1), true
     add 'Break times', $scope.breakTime.countGoal, $scope.breakTime.count, false
-    add 'Average break', $scope.breakTime.averageGoal, $scope.breakTime.average,
-      true
+    add 'Average break', $scope.breakTime.averageGoal,
+      $scope.breakTime.average.toFixed(1), true
     add 'BreakTime / Pomodoro',
       $scope.toPercent $scope.multipleSum.breakPomodoroGoal,
       $scope.toPercent($scope.multipleSum.breakPomodoro), false
