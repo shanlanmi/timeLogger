@@ -113,7 +113,7 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     cookingGoal: 30,
     goodmorningGoal: 40,
     coresleepGoal: 210,
-    napGoal: 50,
+    napGoal: 40,
     analyse: function() {
       var getSum, j, key, keyName, keys, len;
       getSum = function(type) {
@@ -143,6 +143,7 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     pomodoro: ['Upgrde', 'Maintain', 'Daily', 'Weekly', 'RSS', 'DayOne', 'Font-end', 'PathSource', 'Sport', 'healthCare', 'P2P', 'IndexFund', 'Finance'],
     pomodoroTimesGoal: 20,
     pomodoroAveGoal: 30,
+    pomodoroMaxGoal: 35,
     breakPomodoroGoal: 0.5,
     unPassionalWorks: ['PathSourc', 'WorkTalk'],
     passionalWorks: ['Font-end'],
@@ -156,35 +157,44 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     analyse: function() {
       var getArrSum, getSum, result;
       getSum = function(type) {
-        var count, data, j, len, ref, sum;
+        var count, data, j, len, max, ref, sum;
         count = 0;
         sum = 0;
+        max = 0;
         ref = $scope.formatData.log;
         for (j = 0, len = ref.length; j < len; j++) {
           data = ref[j];
           if (!(data.type === type && data.during > 1)) {
             continue;
           }
+          if (data.during > max) {
+            max = data.during;
+          }
           count++;
           sum += data.during;
         }
-        return [count, sum];
+        return [count, sum, max];
       };
       getArrSum = function(arr) {
-        var arrCount, arrSum, j, len, res, type;
+        var arrCount, arrMax, arrSum, j, len, res, type;
         arrSum = 0;
         arrCount = 0;
+        arrMax = 0;
         for (j = 0, len = arr.length; j < len; j++) {
           type = arr[j];
           res = getSum(type);
           arrCount += res[0];
           arrSum += res[1];
+          if (arrMax < res[2]) {
+            arrMax = res[2];
+          }
         }
-        return [arrCount, arrSum];
+        return [arrCount, arrSum, arrMax];
       };
       result = getArrSum(this.pomodoro);
       this.pomodoroTimes = result[0];
       this.pomodoroSum = result[1];
+      this.pomodoroMax = result[2];
       this.pomodoroAve = this.pomodoroSum / this.pomodoroTimes;
       this.breakPomodoro = $scope.breakTime.count / this.pomodoroTimes;
       this.passionalSum = getArrSum(this.passionalWorks)[1] / 60;
@@ -221,11 +231,12 @@ angular.module('starter.controllers', []).controller('HomeCtrl', function($scope
     add('My Percent', $scope.toPercent($scope.multipleSum.myTimePercentGoal), $scope.toPercent($scope.multipleSum.myTimePercent), false);
     add('Core Sleep', $scope.sumLimit.coresleepGoal / 60, ($scope.sumLimit.coresleep / 60).toFixed(1), true);
     add('Nap', $scope.sumLimit.napGoal, $scope.sumLimit.nap, true);
-    add('Pomodoro Times', $scope.multipleSum.pomodoroTimesGoal, $scope.multipleSum.pomodoroTimes, false);
-    add('Pomodoro Average', $scope.multipleSum.pomodoroAveGoal, $scope.multipleSum.pomodoroAve.toFixed(1), true);
-    add('Break times', $scope.breakTime.countGoal, $scope.breakTime.count, false);
+    add('Break times', $scope.breakTime.countGoal, $scope.breakTime.count, true);
     add('Average break', $scope.breakTime.averageGoal, $scope.breakTime.average.toFixed(1), true);
-    add('BreakTime / Pomodoro', $scope.toPercent($scope.multipleSum.breakPomodoroGoal, $scope.toPercent($scope.multipleSum.breakPomodoro), false));
+    add('Pomodoro Times', $scope.multipleSum.pomodoroTimesGoal, $scope.multipleSum.pomodoroTimes, false);
+    add('Pomodoro Maximum', $scope.multipleSum.pomodoroMaxGoal, $scope.multipleSum.pomodoroMax.toFixed(1), true);
+    console.log($scope.multipleSum);
+    add('BreakTime / Pomodoro', $scope.toPercent($scope.multipleSum.breakPomodoroGoal), $scope.toPercent($scope.multipleSum.breakPomodoro), false);
     add('Passional Work', $scope.multipleSum.passionalWorksGoal, $scope.multipleSum.passionalSum.toFixed(1), false);
     add('Work Sum', $scope.multipleSum.workSumGoal, $scope.multipleSum.workSum.toFixed(1), true);
     add('Lunch', $scope.sumLimit.lunchGoal, $scope.sumLimit.lunch, true);

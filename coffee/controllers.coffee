@@ -97,7 +97,7 @@ $localStorage, getStaticJson) ->
     cookingGoal: 30
     goodmorningGoal: 40
     coresleepGoal: 210
-    napGoal: 50
+    napGoal: 40
     analyse: ->
       getSum = (type) ->
         sum = 0
@@ -131,6 +131,7 @@ $localStorage, getStaticJson) ->
       'Finance']
     pomodoroTimesGoal: 20
     pomodoroAveGoal: 30
+    pomodoroMaxGoal: 35
     breakPomodoroGoal: 0.5
     unPassionalWorks: ['PathSourc', 'WorkTalk']
     passionalWorks: ['Font-end']
@@ -160,23 +161,28 @@ $localStorage, getStaticJson) ->
       getSum = (type) ->
         count = 0
         sum = 0
+        max = 0
         for data in $scope.formatData.log when data.type == type &&
         data.during > 1
+          if data.during > max then max = data.during
           count++
           sum += data.during
-        [count, sum]
+        [count, sum, max]
       getArrSum = (arr) ->
         arrSum = 0
         arrCount = 0
+        arrMax = 0
         for type in arr
           res = getSum(type)
           arrCount += res[0]
           arrSum += res[1]
-        [arrCount, arrSum]
+          if arrMax < res[2] then arrMax = res[2]
+        [arrCount, arrSum, arrMax]
       # ==========> pomodoro <==========
       result = getArrSum(@pomodoro)
       @pomodoroTimes = result[0]
       @pomodoroSum = result[1]
+      @pomodoroMax = result[2]
       @pomodoroAve = @pomodoroSum / @pomodoroTimes
       @breakPomodoro = $scope.breakTime.count / @pomodoroTimes
       # ==========> work <==========
@@ -213,15 +219,16 @@ $localStorage, getStaticJson) ->
     add 'Core Sleep', $scope.sumLimit.coresleepGoal/60,
       ($scope.sumLimit.coresleep/60).toFixed(1), true
     add 'Nap', $scope.sumLimit.napGoal, $scope.sumLimit.nap, true
-    add 'Pomodoro Times', $scope.multipleSum.pomodoroTimesGoal,
-      $scope.multipleSum.pomodoroTimes, false
-    add 'Pomodoro Average', $scope.multipleSum.pomodoroAveGoal,
-      $scope.multipleSum.pomodoroAve.toFixed(1), true
-    add 'Break times', $scope.breakTime.countGoal, $scope.breakTime.count, false
+    add 'Break times', $scope.breakTime.countGoal, $scope.breakTime.count, true
     add 'Average break', $scope.breakTime.averageGoal,
       $scope.breakTime.average.toFixed(1), true
+    add 'Pomodoro Times', $scope.multipleSum.pomodoroTimesGoal,
+      $scope.multipleSum.pomodoroTimes, false
+    add 'Pomodoro Maximum', $scope.multipleSum.pomodoroMaxGoal,
+      $scope.multipleSum.pomodoroMax.toFixed(1), true
+    console.log $scope.multipleSum
     add 'BreakTime / Pomodoro',
-      $scope.toPercent $scope.multipleSum.breakPomodoroGoal,
+      $scope.toPercent($scope.multipleSum.breakPomodoroGoal),
       $scope.toPercent($scope.multipleSum.breakPomodoro), false
     add 'Passional Work', $scope.multipleSum.passionalWorksGoal,
       $scope.multipleSum.passionalSum.toFixed(1), false
